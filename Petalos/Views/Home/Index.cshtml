@@ -1,0 +1,30 @@
+﻿@inject Petalos.Services.FloresServices flores
+@{
+    Layout = "_Layout";
+}
+<div id="foto">
+    <img src="~/images/img09.jpg" alt="" />
+</div>
+<section>
+    <h2>Bienvenido a Petalos y Flores</h2>
+
+    <p>
+        <strong>Petalos y Flores</strong>, es un sitio web para practicar el manejo de base
+        de datos utilizando MySQL Server y ASP.NET MVC.
+    </p>
+    <p>
+        De clic en el nombre de una flor en el menú de la parte inferior para ver su descripción
+        y caracterisiticas.
+    </p>
+
+</section>
+<nav>
+    <ul>
+        @foreach (var item in flores.datosflores)
+        {
+            <li><a href="~/@item.Nombre.Replace(" ", "-")">@item.Nombre</a></li>
+        }
+        
+        
+    </ul>
+</nav>

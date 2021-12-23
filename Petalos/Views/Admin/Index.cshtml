@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+<h2 class="titulo">LISTA DE FLORES</h2>
+
+<p>
+    <a class="button" href="~/Admin/AgregarFlor">Agregar Flor</a>
+    <a class="button" href="~/Home/Index">Salir</a>
+</p>
+
+<div class="entrada">
+
+    <table id="tablaFlores" style="width: 100%;">
+        <tr style="background: pink;">
+            <th>Flor</th>
+            <th style="width: 60%">Acción</th>
+        </tr>
+        <tr>
+            <td>Flor 1</td>
+            <td>
+                <a href='~/Admin/AgregarImagenes'>Agregar Imagenes</a>
+                <a href='~/Admin/EditarFlor'>Editar</a>
+                <a href='#'>Eliminar</a>
+            </td>
+            
+        </tr>
+        <tr>
+            <td>Flor 2</td>
+            <td>
+                <a href='~/Admin/AgregarImagenes'>Agregar Imagenes</a>
+                <a href='~/Admin/EditarFlor'>Editar</a>
+                <a href='#'>Eliminar</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Flor 3</td>
+            <td>
+                <a href='~/Admin/AgregarImagenes'>Agregar Imagenes</a>
+                <a href='~/Admin/EditarFlor'>Editar</a>
+                <a href='#'>Eliminar</a>
+            </td>
+        </tr>
+    </table>
+
+
+    <div id="popConfirmacion" class="popup" runat="server">
+        <div>
+            <h1>Por favor confirme:</h1>
+            <p id="mensajeConfirmacion" runat="server">¿Está seguro de eliminar los datos e imagenes de la flor seleccionada?</p>
+            <input type="button" value="Si" />
+            <input type="button" value="No" />
+        </div>
+    </div>
+
+</div>
+
