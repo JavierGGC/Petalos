@@ -25,7 +25,7 @@ namespace Petalos
                 
                 );
 
-            services.AddScoped<Petalos.Services.FloresServices>();
+            
 
             services.AddMvc();
         }

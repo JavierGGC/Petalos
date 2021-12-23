@@ -13,33 +13,34 @@ namespace Petalos.Controllers
     {
         public floresContext Context { get; }
 
-        public HomeController(floresContext fc)
+        public HomeController(floresContext cx)
         {
-            Context = fc;
+            Context = cx;
         }
+        [Route("/")]
+        [Route("Index")]
         public IActionResult Index()
         {
-           
-
-            return View();
+            var flor = Context.Datosflores.OrderBy(x => x.Nombre);
+            return View(flor);
         }
-        [Route("/{Flor}")]
-        public IActionResult Flor(string datosflores)
+        [Route("Flor/{id}")]
+        public IActionResult Flor(int id)
         {
-            
-            var df = Context.Datosflores
-                .Include(x => x.Imagenesflores)
-                .FirstOrDefault(x => x.Nombre == datosflores);
+            var flor = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == id);
+            Random r = new();
+            FloresViewModel vm = new();
+            vm.Flores = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == id);
+            vm.Masflores = Context.Datosflores.Where(x => x.Idflor != vm.Flores.Idflor).ToList().OrderBy(x => r.Next()).Take(4);
 
-            if (df == null)
+            if (vm == null)
             {
                 return RedirectToAction("Index");
             }
-
-            
-            return View(datosflores);
-
-            
+            else
+            {
+                return View(vm);
+            }
         }
     }
 }

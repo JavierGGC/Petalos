@@ -4,7 +4,7 @@ namespace Petalos.Models.ViewModels
 {
     public class FloresViewModel
     {
-        public string Nombreimagen { get; set; }
-        public IEnumerable<Datosflores> Datosflores { get; set; }
+        public Datosflores Flores { get; set; }
+        public IEnumerable<Datosflores> Masflores { get; set; }
     }
 }

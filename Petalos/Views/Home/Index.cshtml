@@ -1,4 +1,4 @@
-﻿@inject Petalos.Services.FloresServices flores
+﻿@model IEnumerable<Petalos.Models.Datosflores>
 @{
     Layout = "_Layout";
 }
@@ -20,11 +20,9 @@
 </section>
 <nav>
     <ul>
-        @foreach (var item in flores.datosflores)
+        @foreach (var f in Model)
         {
-            <li><a href="~/@item.Nombre.Replace(" ", "-")">@item.Nombre</a></li>
+            <li><a href="~/Flor/@f.Idflor">@f.Nombre</a></li>
         }
-        
-        
     </ul>
 </nav>

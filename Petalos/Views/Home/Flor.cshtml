@@ -1,38 +1,37 @@
-﻿@model Petalos.Models.Datosflores
+﻿@model Petalos.Models.ViewModels.FloresViewModel
 
 @{
     Layout = "_Layout";
 }
 
-<section class="post">
-    <h2>Zinnia</h2>
-
-    <h4>Nombre científico o latino:</h4>
-    <p>@Model.Nombrecientifico</p>
-    <h4>Nombre común:</h4>
-    <p>@Model.Nombrecomun</p>
-    <h4>Origen:</h4>
-    <p>@Model.Origen</p>
-    <h4>Descripción:</h4>
-    <p>
-       @Model.Descripcion
-    </p>
-
-    <div id="imagenes">
-        <img title="Zinnia" src="~/images/zinniasa.jpg">
-        <img title="Zinnia" src="~/images/zinnia29.jpg">
-    </div>
-</section>
-<aside>
-    <nav>
-        <h2>Menú</h2>
-        <ul>
-            <li><a href='~/Home/Flor'>Flores</a></li>
-            <li><a href='~/Home/Flor'>Flores</a></li>
-            <li><a href='~/Home/Flor'>Flores</a></li>
-            <li><a href='~/Home/Flor'>Flores</a></li>
-        </ul>
-    </nav>
-</aside>
-
+ <section class="post">
+        <h2>@Model.Flores.Nombre</h2>
+        <h4>Nombre científico o latino:</h4>
+        <p>@Model.Flores.Nombrecientifico</p>
+        <h4>Nombre común:</h4>
+        <p>@Model.Flores.Nombrecomun</p>
+        <h4>Origen:</h4>
+        <p>@Model.Flores.Origen</p>
+        <h4>Descripción:</h4>
+        <p>
+            @Model.Flores.Descripcion
+        </p>
+     <div id="imagenes">
+            @foreach (var img in Model.Flores.Imagenesflores)
+            {
+                <img title="@img.Nombreimagen" src="~/images/@img.Nombreimagen" />              
+            }
+        </div>
+    </section>
+    <aside>
+        <nav>
+            <h2>Menú</h2>
+            <ul>
+                @foreach (var mas in Model.Masflores)
+                {
+                    <li><a href='~/Flor/@mas.Idflor'>@mas.Nombre</a></li>
+                }
+            </ul>
+        </nav>
+    </aside>
 
