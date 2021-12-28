@@ -1,0 +1,35 @@
+﻿@model Petalos.Models.Datosflores
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+<h2 class="titulo">Editar flor</h2>
+<form method="post" action="~/Admin/Admin/EditarFlor">
+    <input type="hidden" asp-for="Idflor" />
+    <label>Nombre:</label><input asp-for="Nombre" type="text" /><br />
+    <label>Nombre Cientifico:</label><input asp-for="Nombrecientifico" type="text" /><br />
+    <label>Nombre Común:</label><input asp-for="Nombrecomun" type="text" /><br />
+    <label>Origen:</label><input asp-for="Origen" type="text" /><br />
+    <label>Descripción:</label><textarea asp-for="Descripcion" rows="5"></textarea><br />
+    <p id="mensajeError">@Html.ValidationSummary()</p>
+    <a href="~/Admin">
+        <input type="submit" value="Guardar" />
+        <input type="button" value="Cancelar" />
+    </a>
+</form>
+<div id="popErrores" class="popup" runat="server">
+    <div>
+        <h1>Ha ocurrido un error:</h1>
+        
+        <input type="button" value="Aceptar"/>
+    </div>
+</div>
+@*<script>
+    function dbox(msg) {
+        var box = document.getElementById('popErrores'),
+            boxm = document.getElementById('mensajeError');
+
+        boxm.innerHTML = (msg === undefined) ? "" : msg;
+        box.style.display = (msg === undefined) ? "none" : "block";
+    }
+</script>*@

@@ -36,6 +36,7 @@ namespace Petalos
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
 
             app.UseRouting();
@@ -43,6 +44,7 @@ namespace Petalos
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
                 endpoints.MapDefaultControllerRoute();
             });
         }

@@ -1,0 +1,26 @@
+﻿@model Petalos.Models.Datosflores
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{ Layout = "_Layout";}
+<div id="popConfirmacion" class="popup" runat="server" style="display:block">
+    <div>
+        <h1>Por favor confirme:</h1>
+        <p id="mensajeConfirmacion" runat="server">¿Está seguro de eliminar los datos e imagenes de la flor seleccionada?</p>
+        <form method="post" action="~/Admin/Admin/Eliminar" >
+            <input type="hidden" asp-for="Idflor" />
+            <input type="submit" value="Si" />
+            <a href="~/Admin">
+                <input type="button" value="No" />
+            </a>
+        </form>
+    </div>
+    @*<script>
+        function dbox(msg) {
+            var box = document.getElementById('popConfirmacion'),
+            boxm = document.getElementById('mensajeConfirmacion');
+
+            boxm.innerHTML = (msg === undefined) ?"¿Está seguro de eliminar los datos e imagenes de la flor seleccionada?" : msg;
+            box.style.display = (msg === undefined) ? "none" : "block";
+           
+        }
+    </script>*@
+</div>

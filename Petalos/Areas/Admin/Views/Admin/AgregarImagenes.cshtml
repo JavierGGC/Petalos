@@ -1,0 +1,32 @@
+﻿@model Petalos.Areas.Admin.Models.LasFloresViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<h2 class="titulo">Agregar imagenes a una flor</h2>
+
+<form method="post" action="~/Admin/Admin/AgregarImagenes" enctype="multipart/form-data">
+    <label>Flor:</label><input type="text" readonly="readonly" asp-for="datoFlor.Nombre" value="@Model.datoFlor.Nombre"/><br />
+    <label>Archivo:</label><input type="file" id="defaultimg" name="archivo" accept=".jpg" /><br />
+    <input type="hidden" asp-for="imagenFlor.Nombreimagen" value="@Model.datoFlor.Nombre"/>
+
+    <p id="mensajeError">@Html.ValidationSummary()</p>
+    <input type="submit" value="Agregar" />
+    <a href="~/Admin">
+        <input type="button" value="Cancelar" />
+    </a>
+</form>
+
+<div class="listaImagenes">
+    <ul>
+        @foreach (var img in Model.datoFlor.Imagenesflores)
+        {
+            <li>
+                <img title="@img.Nombreimagen" src='~/images/@img.Nombreimagen' />
+                <a href="~/Admin/Admin/EliminarImagen/@img.Idimagen">Eliminar</a>
+            </li>
+        }
+    </ul>
+</div>
+

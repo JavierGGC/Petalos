@@ -1,0 +1,19 @@
+﻿@model Petalos.Models.Imagenesflores
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{ Layout = "_Layout";}
+
+<div id="popConfirmacion" class="popup" style="display:block">
+    <div>
+        <h1>Por favor confirme:</h1>
+        <p id="mensajeConfirmacion">¿Desea eliminar la imagen?</p>
+        <img src="~/images/@Model.Nombreimagen" style="height:10em; width:20em;" />
+        <form action="~/Admin/Admin/EliminarImagen" method="post">
+            <input type="hidden" asp-for="Idimagen" />
+            <input type="submit" value="Si" />
+            <a href="~/Admin">
+                <input type="button" value="No" />
+            </a>
+            <p id="mensajeError">@Html.ValidationSummary()</p>
+        </form>
+    </div>
+</div>
