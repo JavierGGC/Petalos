@@ -29,8 +29,8 @@ public class AdminController : Controller
     [Route("Admin/Index")]
     public IActionResult Index()
     {
-        var flores = Context.Datosflores.OrderBy(x => x.Idflor);
-        return View(flores);
+        var fls = Context.Datosflores.OrderBy(x => x.Idflor);
+        return View(fls);
     }
 
     public IActionResult AgregarFlor()
@@ -42,27 +42,27 @@ public class AdminController : Controller
     {
         if (string.IsNullOrWhiteSpace(f.Nombre))
         {
-            ModelState.AddModelError("", "Escriba el nombre.");
+            ModelState.AddModelError("", "Es necesario un nombre.");
         }
         else if (string.IsNullOrWhiteSpace(f.Nombrecientifico))
         {
-            ModelState.AddModelError("", "Escriba el nombre cientifico.");
+            ModelState.AddModelError("", "Es necesario un nombre científico.");
         }
         else if (string.IsNullOrWhiteSpace(f.Nombrecomun))
         {
-            ModelState.AddModelError("", "Escriba el nombre comun.");
+            ModelState.AddModelError("", "Es necesario el nombre común.");
         }
         else if (string.IsNullOrWhiteSpace(f.Origen))
         {
-            ModelState.AddModelError("", "Escriba el origen.");
+            ModelState.AddModelError("", "Es necesio escribir el origen.");
         }
         else if (string.IsNullOrWhiteSpace(f.Descripcion))
         {
-            ModelState.AddModelError("", "Escriba el nombre.");
+            ModelState.AddModelError("", "Es necesario un nombre.");
         }
         else if (Context.Datosflores.Any(x => x.Nombrecientifico == f.Nombrecientifico))
         {
-            ModelState.AddModelError("", "Ya existe una flor registrada con ese nombre cientifico.");
+            ModelState.AddModelError("", "Este no es admitido, ya que ya hay una flor registrada con este nombre");
         }
         else
         {
@@ -85,19 +85,19 @@ public class AdminController : Controller
 
         if (archivo == null)
         {
-            ModelState.AddModelError("", "Imagen no seleccionada.");
+            ModelState.AddModelError("", "La imagen aún no se a seleccionado.");
             return View(flor);
         }
         if (archivo != null)
         {
             if (archivo.ContentType != "image/jpeg")
             {
-                ModelState.AddModelError("", "Solo se aceptan imagenes tipo jpg.");
+                ModelState.AddModelError("", "La imagen tiene que ser del tipo jpg.");
                 return View(flor);
             }
             if (archivo.Length > 1024 * 1024 * 2)
             {
-                ModelState.AddModelError("", "La imagen excede el tamano permitido de imagen.");
+                ModelState.AddModelError("", "Esta imagen sobrepasa el tamaño permitido.");
                 return View(flor);
             }
             flor.imagenFlor.Nombreimagen = archivo.FileName;
@@ -115,7 +115,7 @@ public class AdminController : Controller
     }
     public IActionResult EditarFlor(int id)
     {
-        var flor = Context.Imagenesflores.FirstOrDefault(x => x.Idflor == id);
+        var flor = Context.Datosflores.FirstOrDefault(x => x.Idflor == id);
         if (flor == null)
         {
             return RedirectToAction("Index");
@@ -125,43 +125,43 @@ public class AdminController : Controller
     [HttpPost]
     public IActionResult EditarFlor(Datosflores f)
     {
-        var flor = Context.Datosflores.FirstOrDefault(x => x.Idflor == f.Idflor);
-        if (flor == null)
+        var fls = Context.Datosflores.FirstOrDefault(x => x.Idflor == f.Idflor);
+        if (fls == null)
         {
             return RedirectToAction("Index");
         }
         if (string.IsNullOrWhiteSpace(f.Nombre))
         {
-            ModelState.AddModelError("", "Escriba el nombre.");
+            ModelState.AddModelError("", "Es necesario un nombre.");
         }
         else if (string.IsNullOrWhiteSpace(f.Nombrecientifico))
         {
-            ModelState.AddModelError("", "Escriba el nombre cientifico.");
+            ModelState.AddModelError("", "Es necesario un nombre científico.");
         }
         else if (string.IsNullOrWhiteSpace(f.Nombrecomun))
         {
-            ModelState.AddModelError("", "Escriba el nombre comun.");
+            ModelState.AddModelError("", "Es necesario el nombre común.");
         }
         else if (string.IsNullOrWhiteSpace(f.Origen))
         {
-            ModelState.AddModelError("", "Escriba el origen.");
+            ModelState.AddModelError("", "Es necesario escribir el origen.");
         }
         else if (string.IsNullOrWhiteSpace(f.Descripcion))
         {
-            ModelState.AddModelError("", "Escriba el nombre");
+            ModelState.AddModelError("", "Es necesario un nombre");
         }
         else if (Context.Datosflores.Any(x => x.Nombrecientifico.Contains(f.Nombrecientifico) && !x.Nombrecientifico.Contains(f.Nombrecientifico)))
         {
-            ModelState.AddModelError("", "Ya existe una flor registrada con ese nombre.");
+            ModelState.AddModelError("", "Este no es admitido,ya que hay una flor regisrada con este nombre");
         }
         else
         {
-            flor.Nombre = f.Nombre;
-            flor.Nombrecientifico = f.Nombrecientifico;
-            flor.Nombrecomun = f.Nombrecomun;
-            flor.Origen = f.Origen;
-            flor.Descripcion = f.Descripcion;
-            Context.Update(flor);
+            fls.Nombre = f.Nombre;
+            fls.Nombrecientifico = f.Nombrecientifico;
+            fls.Nombrecomun = f.Nombrecomun;
+            fls.Origen = f.Origen;
+            fls.Descripcion = f.Descripcion;
+            Context.Update(fls);
             Context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -169,25 +169,25 @@ public class AdminController : Controller
     }
     public IActionResult Eliminar(int id)
     {
-        var flor = Context.Datosflores.FirstOrDefault(x => x.Idflor == id);
-        if (flor == null)
+        var fls = Context.Datosflores.FirstOrDefault(x => x.Idflor == id);
+        if (fls == null)
         {
             return RedirectToAction("Index");
         }
-        return View(flor);
+        return View(fls);
     }
     [HttpPost]
     public IActionResult Eliminar(Datosflores f)
     {
-        var flor = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == f.Idflor);
-        var imgs = flor.Imagenesflores.OrderBy(x => x.Nombreimagen);
-        if (flor == null)
+        var fls = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == f.Idflor);
+        var imgs = fls.Imagenesflores.OrderBy(x => x.Nombreimagen);
+        if (fls == null)
         {
-            ModelState.AddModelError("", "La flor no ha sido encontrada o ya fue eliminada.");
+            ModelState.AddModelError("", "No se a encontrado esta flor, puede que haya sido eliminada");
         }
         else
         {
-            Context.Remove(flor);
+            Context.Remove(fls);
             Context.SaveChanges();
             foreach (var i in imgs)
             {
@@ -203,26 +203,26 @@ public class AdminController : Controller
     }
     public IActionResult Eliminalaimagen(int id)
     {
-        var flor = Context.Imagenesflores.FirstOrDefault(x => x.Idimagen == id);
-        if (flor == null)
+        var fls = Context.Imagenesflores.FirstOrDefault(x => x.Idimagen == id);
+        if (fls == null)
         {
             return RedirectToAction("Index");
         }
-        return View(flor);
+        return View(fls);
     }
     [HttpPost]
     public IActionResult EliminalaImagen(Imagenesflores f)
     {
-        var flor = Context.Imagenesflores.FirstOrDefault(x => x.Idimagen == f.Idimagen);
+        var fls = Context.Imagenesflores.FirstOrDefault(x => x.Idimagen == f.Idimagen);
         if (f == null)
         {
-            ModelState.AddModelError("", "La imagen no ha sido encontrada o ya fue eliminada.");
+            ModelState.AddModelError("", "No se a encontrado esta flor, puede que haya sido eliminada");
         }
         else
         {
-            Context.Remove(flor);
+            Context.Remove(fls);
             Context.SaveChanges();
-            var path = Env.WebRootPath + "/images/" + flor.Nombreimagen;
+            var path = Env.WebRootPath + "/images/" + fls.Nombreimagen;
             if (System.IO.File.Exists(path))
             {
                 System.IO.File.Delete(path);

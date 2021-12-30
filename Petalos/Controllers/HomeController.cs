@@ -19,15 +19,16 @@ namespace Petalos.Controllers
         }
         [Route("/")]
         [Route("Index")]
+        [Route("Home")]
         public IActionResult Index()
         {
-            var flor = Context.Datosflores.OrderBy(x => x.Nombre);
-            return View(flor);
+            var fls = Context.Datosflores.OrderBy(x => x.Nombre);
+            return View(fls);
         }
         [Route("Flor/{id}")]
         public IActionResult Flor(int id)
         {
-            var flor = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == id);
+            var fls = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == id);
             Random r = new();
             FloresViewModel vm = new();
             vm.Flores = Context.Datosflores.Include(x => x.Imagenesflores).FirstOrDefault(x => x.Idflor == id);
